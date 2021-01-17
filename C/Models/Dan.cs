@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 namespace Projekat.Models
 {
     [Table("Dani")]
@@ -14,6 +15,8 @@ namespace Projekat.Models
         public string Naziv {get; set;}
 
          public virtual List<Obaveza> Obaveze { get; set; }
+
+        [JsonIgnore]
          public Nedelja Nedelja {get; set;}
     }
 
