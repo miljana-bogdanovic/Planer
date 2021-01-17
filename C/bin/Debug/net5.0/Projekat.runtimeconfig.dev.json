@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\miljana\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\miljana\\.nuget\\packages"
+    ]
+  }
+}
