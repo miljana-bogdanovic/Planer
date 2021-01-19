@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 namespace Projekat.Models
 {
     [Table("Obaveze")]
@@ -20,6 +21,7 @@ namespace Projekat.Models
         [Column("Hitno")]
         public int Hitno { get; set; }
 
+        [JsonIgnore]
         public Dan Dan { get; set; }
 
 

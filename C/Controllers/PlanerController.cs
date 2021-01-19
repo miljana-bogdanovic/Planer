@@ -23,13 +23,22 @@ namespace Projekat.Controllers
        [HttpGet]
        public async Task<List<Nedelja>> PreuzmiNedelje()
        {
-           return await Context.Nedelje.Include(p=>p.Dani).ToListAsync();
+           var dani= await Context.Dani.Include(p=>p.Obaveze).ToListAsync();
+           var nedelje= await Context.Planer.Include(p=>p.Dani).ToListAsync();
+           foreach(Nedelja n in nedelje)
+           {
+               foreach(Dan d in n.Dani)
+               {
+                d.Obaveze=dani.Find(p=> p.id==d.id).Obaveze;
+               }
+           }
+           return nedelje;
        }
        [Route("UpisiNedelju")]
        [HttpPost]
        public async Task UpisiNedelju([FromBody] Nedelja nedelja)
        {
-            Context.Nedelje.Add(nedelja);
+            Context.Planer.Add(nedelja);
             await Context.SaveChangesAsync();
        }
        [Route("IzmeniNedelju")]
@@ -49,14 +58,54 @@ namespace Projekat.Controllers
            Context.Remove(nedelja);
            await Context.SaveChangesAsync();
        }
+       [Route("PreuzmiDane")]
+       [HttpGet]
+       public async Task<List<Dan>> PreuzmiDane()
+       {
+           return await Context.Dani.Include(p=>p.Obaveze).ToListAsync();
+       }
        [Route("UpisiDane/{idNedelje}")]
        [HttpPost]
        public async Task UpisiDane(int idNedelje, [FromBody] Dan dan)
        {
-           var nedelja=await Context.Nedelje.FindAsync(idNedelje);
+           var nedelja=await Context.Planer.FindAsync(idNedelje);
            dan.Nedelja=nedelja;
             Context.Dani.Add(dan);
             await Context.SaveChangesAsync();
+       }
+       [Route("IzbrisiDan/{id}")]
+       [HttpDelete]
+       public async Task IzbrisiDan(int id)
+       {
+           var dan=await Context.FindAsync<Dan>(id);
+           Context.Remove(dan);
+           await Context.SaveChangesAsync();
+       }
+
+       [Route("UpisiObaveze/{idDana}")]
+       [HttpPost]
+       public async Task UpisiObaveze(int idDana, [FromBody] Obaveza obaveza)
+       {
+           var dan=await Context.Dani.FindAsync(idDana);
+           obaveza.Dan=dan;
+            Context.Obaveze.Add(obaveza);
+            await Context.SaveChangesAsync();
+       }
+       [Route("IzmeniObavezu/{idObaveze}")]
+       [HttpPut]
+       public async Task IzmeniObavezu([FromBody] Obaveza obaveza)
+       {
+           //var staraNedelja = await Context.Nedelje.FindAsync(nedelja.ID);
+           Context.Obaveze.Update(obaveza);
+           await Context.SaveChangesAsync();
+       }
+        [Route("IzbrisiObavezu/{id}")]
+       [HttpDelete]
+       public async Task IzbrisiObavezu(int id)
+       {
+           var obaveza=await Context.FindAsync<Obaveza>(id);
+           Context.Remove(obaveza);
+           await Context.SaveChangesAsync();
        }
     }
 }

@@ -1,9 +1,10 @@
 export class Obaveza{
-    constructor(predmet, boja, hitno, dan) {
+    constructor( predmet, boja, hitno, dan) {
         this.predmet=predmet;
         this.boja=boja;
         this.hitno=hitno;
-        this.dan=dan;
+        this.dan=dan.naziv;
+        this.id=0;
     }
     odrediBoju(boja, host)
     {
@@ -34,15 +35,22 @@ export class Obaveza{
            stavka=forma.querySelector(".selekcijaBoje");
            stavka.value=this.boja;
            stavka=forma.querySelector(".selekcijaDana");
+
+
            stavka.value=this.dan;
-           console.log(forma);
-           stavka=forma.querySelector(".hitnoCheck");
-           console.log(stavka);
+           stavka=forma.querySelector("input[type=checkbox]");
+            //stavka=forma.querySelector(".hitnoCheck");
            if (this.hitno)
                 stavka.checked=true;
                 else
                 stavka.checked=false;
            
         }
+    }
+    arzurirajObavezu(predmet, boja, hitno)
+    {
+        this.predmet=predmet;
+        this.boja=boja;
+        this.hitno=hitno;
     }
 }

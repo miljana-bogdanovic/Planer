@@ -4,41 +4,45 @@
     flex-direction: row;
     flex-basis: 500px;
     align-items: center;
+    justify-content: center;
     height: 500px;
-    padding: 3%;
+    padding: 15px;
     text-align: center;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    flex-wrap: wrap;
 }
 .kontejnerForma {
     display:flex;
     flex-direction: column;
     border:  0.1px solid gray;
-    flex-basis: 100px;
     flex-grow: 0.5;
     height: 400px;
     justify-content:space-evenly;
     align-content: center;
-    margin-right: 50px;
+    margin: 50px;
     box-shadow: 5px 5px 2px rgb(201, 201, 201);
     
 }
 .kontejnerNedelja {
     
     display:inline-flex;
+    justify-content: space-evenly;
     flex-direction: row;
-    flex-basis: 200px;
-    flex-grow: 7;
-    box-shadow: 5px 5px 2px rgb(201, 201, 201);
+    flex-wrap: wrap;
+    flex-shrink: 1;
+    flex-grow: 10;
     height: 500px;
 }
 .kontejnerDan {
     display: flex;
     flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 150px;
     border:  1px solid black;
     flex-direction: column;
-    flex-basis: 200px;
-    margin: 0%;
-    min-height: 200px;
+    margin-left: 12px;
+    margin-bottom: 12px;
+    height: 400px;
 }
 .obaveza{
     display: flex;
@@ -59,4 +63,16 @@
     height: 5%;
     width: 50%;
     align-self: center;
+}
+@media only screen and (max-width: 1580px) {
+    .kontejnerDan {
+        flex-grow:0;
+        height: 300px;
+        flex-basis: 300px;
+    }
+}
+
+@media only screen and (max-width: 680px){
+    
+   
 }

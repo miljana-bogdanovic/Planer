@@ -9,7 +9,7 @@ namespace Projekat.Models
     {
         [Key]
         [Column("ID")]
-        public int ID {get; set;}
+        public int id {get; set;}
         [Column("Naziv")]
         [MaxLength(10)]
         public string Naziv {get; set;}

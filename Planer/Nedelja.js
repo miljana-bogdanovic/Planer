@@ -6,13 +6,13 @@ import { Obaveza } from "./Obaveza.js";
 export class Nedelja{
     constructor()
     {
+        //this.id=id;
         this.daniUNedelji=[];
-        const dani=["Ponedeljak", "Utorak", "Sreda", "Cetvrtak", "Petak", "Subota", "Nedelja"];
-        dani.forEach((naziv) => {
-            this.daniUNedelji.push(new Dan(naziv));
-        });
         this.kontejner=null;
-        
+        const dani = ["Ponedeljak", "Utorak", "Sreda", "Cetvrtak", "Petak", "Subota", "Nedelja"];
+        dani.forEach(naziv=> {
+            this.daniUNedelji.push(new Dan(naziv, 0));
+        });
     }
     crtaj(host)
     {
@@ -22,8 +22,6 @@ export class Nedelja{
         host.appendChild(this.kontejner);
         this.crtajFormu(this.kontejner);
         this.crtajNedelju(this.kontejner);
-        
-
     }
     crtajFormu(host)
     {
@@ -39,7 +37,7 @@ export class Nedelja{
         //predmet
         let divPredmet = document.createElement("div");
         var labela= document.createElement("label");
-        labela.innerHTML="Unesi predmet";
+        labela.innerHTML="Unesi predmet: ";
         divPredmet.appendChild(labela);
 
         let unosPredmeta= document.createElement("input");
@@ -108,12 +106,7 @@ export class Nedelja{
             const boja=selekcijaBoje.value;
             const hitnoCheck=hitno.checked ? 1 : 0;
             let i=this.daniUNedelji.findIndex(trazeniDan => trazeniDan.naziv==dan);
-            if(this.daniUNedelji[i].listaObaveza.length>2)
-            alert("Previse si ambiciozna, vec ucis 3 predmeta tog dana, izaberi drugi!");
-            else {
             this.daniUNedelji[i].dodajObavezu(naziv, boja, hitnoCheck);
-            this.daniUNedelji[i].arzurirajDan();
-            }
         }
         //Dugme izmeni
         const dugmeIzmeni = document.createElement("button");
@@ -125,15 +118,9 @@ export class Nedelja{
             const dan=selekcijaDana.value;
             const boja=selekcijaBoje.value;
             const hitnoCheck=hitno.checked ? 1 : 0;
+            
             let i=this.daniUNedelji.findIndex(trazeniDan => trazeniDan.naziv==dan);
-            let j=this.daniUNedelji[i].listaObaveza.findIndex(obaveza => obaveza.predmet==naziv)
-            if (j<0)
-                alert("Trazena stavka ne postoji, pa se ne moze izmeniti!");
-            else {
-            this.daniUNedelji[i].listaObaveza[j].hitno=hitnoCheck;
-            this.daniUNedelji[i].listaObaveza[j].boja=boja;
-            this.daniUNedelji[i].arzurirajDan();
-            }
+            this.daniUNedelji[i].izmeniObavezu(naziv, boja, hitnoCheck);
         }
          //Dugme izbrisi
          const dugmeIzbrisi = document.createElement("button");
@@ -146,14 +133,16 @@ export class Nedelja{
              const boja=selekcijaBoje.value;
              const hitnoCheck=hitno.checked ? 1 : 0;
              let i=this.daniUNedelji.findIndex(trazeniDan => trazeniDan.naziv==dan);
-             let j=this.daniUNedelji[i].listaObaveza.findIndex(obaveza => obaveza.predmet==naziv)
+             /*let j=this.daniUNedelji[i].listaObaveza.findIndex(obaveza => obaveza.predmet==naziv)
              if (j<0)
                  alert("Trazena stavka ne postoji, pa se ne moze izbrisati!");
              else {
                 this.daniUNedelji[i].listaObaveza.splice(j, 1);
-             this.daniUNedelji[i].arzurirajDan();
+             this.daniUNedelji[i].arzurirajDan();*/
+
+             this.daniUNedelji[i].izbrisiObavezu(naziv, boja, hitno);
              }
-         }
+         
         }
         crtajNedelju(host)
         { 
@@ -161,14 +150,14 @@ export class Nedelja{
         kontejnerNedelja.className="kontejnerNedelja";
         host.appendChild(kontejnerNedelja);
 
-        this.daniUNedelji.forEach((dan)=> {
-            let danKontejner=document.createElement("div");
-            danKontejner.className="kontejnerDan";
-            dan.crtajDan(danKontejner);
-            kontejnerNedelja.appendChild(danKontejner);
-            
-        })
+        this.daniUNedelji.forEach((dan, i)=>{
+            let kontejner=document.createElement("div");
+            kontejner.className="kontejnerDan";
+            kontejnerNedelja.appendChild(kontejner);
+            dan.crtajDan(kontejner);
+        }); 
+        }
+    }
 
     
-    }
-}
+    
