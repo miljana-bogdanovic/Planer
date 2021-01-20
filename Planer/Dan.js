@@ -95,21 +95,13 @@ export class Dan {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
-            }/*,
-            body: JSON.stringify(
-            {
-                predmet:predmet,
-                boja: boja,
-                hitno: hitno,
-                dan: this.naziv,
-                id: this.listaObaveza[i].id
-            })*/
+            }
             
         }).then(p=>
-            {
+            {   
                 if (p.ok)
                 {
-                this.izbrisiObavezu(predmet, boja,hitno);
+                this.listaObaveza=this.listaObaveza.filter(o=> o.predmet!=predmet)
                 this.arzurirajDan();
                 }
 

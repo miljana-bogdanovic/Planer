@@ -31,8 +31,9 @@ namespace Projekat
             services.AddCors(options=> 
             options.AddPolicy("CORS", builder =>
             {
-                builder.AllowAnyHeader().
-                AllowAnyMethod().WithOrigins( new string[] {
+                builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins( new string[] {
 
                     "http://127.0.0.1:8080"
                 });

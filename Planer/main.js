@@ -19,10 +19,11 @@ fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
 {
     p.json().then(data=>{
         //debugger;
+        console.log(data);
+        
         data.forEach(nedeljaBaza => {
             const nedeljaPrikaz=new Nedelja();
             nedeljaPrikaz.crtaj(document.body);
-            console.log("crtano");
             nedeljaPrikaz.daniUNedelji.forEach((dan, i) => 
             { 
             dan.id=nedeljaBaza.dani[i].id;
@@ -30,10 +31,45 @@ fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
                 {
                     dan.upisiObavezu(ob.predmet, ob.boja, ob.hitno, dan);
                     dan.listaObaveza[j].id=ob.id;
-                    console.log(ob.id);
                 });
             });
             console.log(nedeljaPrikaz);
         });
-    })
-})
+        //ukoliko nema nedelja u bazi kreiraja se nova i upisuje
+        if(data.length==0)
+        {
+
+            const nedelja=new Nedelja();
+            fetch("https://localhost:5001/Planer/UpisiNedelju", 
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(
+                {
+                    dani : nedelja.daniUNedelji
+           
+                })
+            }).then(p => 
+            {
+                if (p.ok) 
+                {
+                    nedelja.crtaj(document.body);
+                }
+            });
+            fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
+            {
+            p.json().then(data=>{
+                data.forEach(nedeljaBaza => {
+                    nedelja.daniUNedelji.forEach((dan, i) => 
+                    { 
+                        dan.id=nedeljaBaza.dani[i].id;
+                    });
+
+            });
+        });
+    });
+    }
+});
+});
