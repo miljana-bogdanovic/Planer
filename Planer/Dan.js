@@ -25,7 +25,7 @@ export class Dan {
     {
     if(!this.listaObaveza.find(p=> (p.predmet==predmet || p.boja==boja)))
     {
-        console.log(this.id);
+       // console.log(this.id);
             fetch("https://localhost:5001/Planer/UpisiObaveze/" + this.id, 
             {
                
@@ -124,9 +124,9 @@ export class Dan {
     fetch("https://localhost:5001/Planer/PreuzmiDane" ).then(p =>
     {
         p.json().then(data=>{
-            console.log(data);
+            //console.log(data);
             let i=data[ data.findIndex(dan => dan.id==this.id)]
-            console.log(i);
+           // console.log(i);
             i.obaveze.forEach((obaveza,j) => {
                 this.listaObaveza[j].id=obaveza.id;
                 });

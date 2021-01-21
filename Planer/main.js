@@ -19,7 +19,7 @@ fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
 {
     p.json().then(data=>{
         //debugger;
-        console.log(data);
+        //console.log(data);
         
         data.forEach(nedeljaBaza => {
             const nedeljaPrikaz=new Nedelja();
@@ -34,7 +34,7 @@ fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
                     dan.listaObaveza[j].id=ob.id;
                 });
             });
-            console.log(nedeljaPrikaz);
+            //console.log(nedeljaPrikaz);
         });
     });
 });

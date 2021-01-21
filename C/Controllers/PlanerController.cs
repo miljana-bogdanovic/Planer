@@ -72,7 +72,12 @@ namespace Projekat.Controllers
            Context.Remove(dan);
            await Context.SaveChangesAsync();
        }
-
+        [Route("PreuzmiObavezu/{idObaveze}")]
+       [HttpGet]
+       public async Task<Obaveza> PreuzmiObavezu(int idObaveze)
+       {
+           return  await Context.Obaveze.FindAsync(idObaveze);
+       }
        [Route("UpisiObaveze/{idDana}")]
        [HttpPost]
        public async Task UpisiObaveze(int idDana, [FromBody] Obaveza obaveza)
