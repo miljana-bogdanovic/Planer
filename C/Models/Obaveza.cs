@@ -10,6 +10,7 @@ namespace Projekat.Models
         [Key]
         [Column("ID")]
         public int ID {get; set;}
+
         [Column("Predmet")]
         [MaxLength(255)]
         public string Predmet { get; set; }

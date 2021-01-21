@@ -37,7 +37,7 @@ namespace Projekat
 
                     "http://127.0.0.1:8080"
                 });
-                //AllowAnyOrigin();
+                //.AllowAnyOrigin();
             }));
             services.AddControllers();
             services.AddSwaggerGen(c =>

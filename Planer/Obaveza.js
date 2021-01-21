@@ -35,9 +35,7 @@ export class Obaveza{
            stavka=forma.querySelector(".selekcijaBoje");
            stavka.value=this.boja;
            stavka=forma.querySelector(".selekcijaDana");
-
-
-           stavka.value=this.dan;
+           stavka.value=host.querySelector(".Naslov").innerHTML;
            stavka=forma.querySelector("input[type=checkbox]");
             //stavka=forma.querySelector(".hitnoCheck");
            if (this.hitno)

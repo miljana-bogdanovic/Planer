@@ -23,16 +23,7 @@ namespace Projekat.Controllers
        [HttpGet]
        public async Task<List<Nedelja>> PreuzmiNedelje()
        {
-           var dani= await Context.Dani.Include(p=>p.Obaveze).ToListAsync();
-           var nedelje= await Context.Planer.Include(p=>p.Dani).ToListAsync();
-           foreach(Nedelja n in nedelje)
-           {
-               foreach(Dan d in n.Dani)
-               {
-                d.Obaveze=dani.Find(p=> p.id==d.id).Obaveze;
-               }
-           }
-           return nedelje;
+           return  await Context.Planer.Include(p=>p.Dani).ThenInclude(p=>p.Obaveze).ToListAsync();
        }
        [Route("UpisiNedelju")]
        [HttpPost]
@@ -87,11 +78,11 @@ namespace Projekat.Controllers
        public async Task UpisiObaveze(int idDana, [FromBody] Obaveza obaveza)
        {
            var dan=await Context.Dani.FindAsync(idDana);
-           obaveza.Dan=dan;
+            obaveza.Dan=dan;
             Context.Obaveze.Add(obaveza);
             await Context.SaveChangesAsync();
        }
-       [Route("IzmeniObavezu/{idObaveze}")]
+       [Route("IzmeniObavezu")]
        [HttpPut]
        public async Task IzmeniObavezu([FromBody] Obaveza obaveza)
        {

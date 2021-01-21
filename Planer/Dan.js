@@ -10,22 +10,25 @@ export class Dan {
    crtajDan(host)
    {
     this.kontejnerDana=host;
-    let naslov=document.createElement("h1");
+    let naslov=document.createElement("h2");
     naslov.innerHTML=this.naziv;
+    naslov.className="Naslov";
     this.kontejnerDana.appendChild(naslov);    
     this.listaObaveza.forEach((obaveza) => {
        obaveza.crtajObavezu(host);
    })
    }
    dodajObavezu(predmet, boja, hitno){
-    if(!this.listaObaveza.find(p=> p.predmet==predmet))
+    if(this.listaObaveza.length>2)
+    alert("Previse predmeta za isti dan,  izaberi drugi!");
+    else 
     {
-        if(this.listaObaveza.length>2)
-            alert("Previse si ambiciozna, vec ucis 3 predmeta tog dana, izaberi drugi!");
-        else 
-        {
+    if(!this.listaObaveza.find(p=> (p.predmet==predmet || p.boja==boja)))
+    {
+        console.log(this.id);
             fetch("https://localhost:5001/Planer/UpisiObaveze/" + this.id, 
             {
+               
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -42,17 +45,18 @@ export class Dan {
             {
                 if (p.ok) 
                 {
+
                     this.listaObaveza.push(new Obaveza(predmet, boja, hitno, this.naziv));
+                    this.arzurirajID();
                     this.arzurirajDan();
                 }
             });
-        }
     }
     else
     {
-        alert("Vec postoji taj predmet za taj dan!");
+        alert("Vec postoji taj predmet/boja za taj dan!");
     }
-
+    }
     }
     upisiObavezu(predmet, boja, hitno)
     {
@@ -63,7 +67,7 @@ export class Dan {
     {
         const i=this.listaObaveza.findIndex(p=> p.predmet==predmet);
        //debugger;
-        fetch("https://localhost:5001/Planer/IzmeniObavezu/" + this.listaObaveza[i].id, 
+        fetch("https://localhost:5001/Planer/IzmeniObavezu/" , 
             {
                 method: "PUT",
                 headers: {
@@ -115,5 +119,18 @@ export class Dan {
         this.kontejnerDana.removeChild(this.kontejnerDana.lastChild);
         this.crtajDan(this.kontejnerDana);
 
+   }
+   arzurirajID(){
+    fetch("https://localhost:5001/Planer/PreuzmiDane" ).then(p =>
+    {
+        p.json().then(data=>{
+            console.log(data);
+            let i=data[ data.findIndex(dan => dan.id==this.id)]
+            console.log(i);
+            i.obaveze.forEach((obaveza,j) => {
+                this.listaObaveza[j].id=obaveza.id;
+                });
+            });
+        });
    }
 }

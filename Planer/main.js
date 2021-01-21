@@ -23,6 +23,7 @@ fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
         
         data.forEach(nedeljaBaza => {
             const nedeljaPrikaz=new Nedelja();
+            nedeljaPrikaz.ime=nedeljaBaza.ime;
             nedeljaPrikaz.crtaj(document.body);
             nedeljaPrikaz.daniUNedelji.forEach((dan, i) => 
             { 
@@ -35,41 +36,6 @@ fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
             });
             console.log(nedeljaPrikaz);
         });
-        //ukoliko nema nedelja u bazi kreiraja se nova i upisuje
-        if(data.length==0)
-        {
-
-            const nedelja=new Nedelja();
-            fetch("https://localhost:5001/Planer/UpisiNedelju", 
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(
-                {
-                    dani : nedelja.daniUNedelji
-           
-                })
-            }).then(p => 
-            {
-                if (p.ok) 
-                {
-                    nedelja.crtaj(document.body);
-                }
-            });
-            fetch("https://localhost:5001/Planer/PreuzmiNedelje").then(p =>
-            {
-            p.json().then(data=>{
-                data.forEach(nedeljaBaza => {
-                    nedelja.daniUNedelji.forEach((dan, i) => 
-                    { 
-                        dan.id=nedeljaBaza.dani[i].id;
-                    });
-
-            });
-        });
     });
-    }
 });
-});
+

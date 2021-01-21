@@ -1,25 +1,33 @@
 
-
 import { Dan } from "./Dan.js";
 import { Obaveza } from "./Obaveza.js";
 
 export class Nedelja{
-    constructor()
+    constructor(naziv)
     {
-        //this.id=id;
+        this.ime=naziv;
         this.daniUNedelji=[];
         this.kontejner=null;
         const dani = ["Ponedeljak", "Utorak", "Sreda", "Cetvrtak", "Petak", "Subota", "Nedelja"];
         dani.forEach(naziv=> {
             this.daniUNedelji.push(new Dan(naziv, 0));
+    
         });
     }
     crtaj(host)
     {
-        
+        let najveciKontejner=document.createElement("div");
+        najveciKontejner.className="najveciKontejner";
+        host.appendChild(najveciKontejner);
+        let naslov=document.createElement("h1");
+        naslov.className="naslovStranice";
+        naslov.innerHTML=this.ime;
+        najveciKontejner.appendChild(naslov);
+
         this.kontejner=document.createElement("div");
         this.kontejner.className="kontejner";
-        host.appendChild(this.kontejner);
+        najveciKontejner.appendChild(this.kontejner);
+        
         this.crtajFormu(this.kontejner);
         this.crtajNedelju(this.kontejner);
     }
@@ -30,8 +38,9 @@ export class Nedelja{
         host.appendChild(kontejnerForma);
         
         //naslov
-        var naslovForme=document.createElement("h1");
+        var naslovForme=document.createElement("h2");
         naslovForme.innerHTML="Zadatak";
+        naslovForme.className="naslovForme";
         kontejnerForma.appendChild(naslovForme);
 
         //predmet
@@ -133,17 +142,34 @@ export class Nedelja{
              const boja=selekcijaBoje.value;
              const hitnoCheck=hitno.checked ? 1 : 0;
              let i=this.daniUNedelji.findIndex(trazeniDan => trazeniDan.naziv==dan);
-             /*let j=this.daniUNedelji[i].listaObaveza.findIndex(obaveza => obaveza.predmet==naziv)
-             if (j<0)
-                 alert("Trazena stavka ne postoji, pa se ne moze izbrisati!");
-             else {
-                this.daniUNedelji[i].listaObaveza.splice(j, 1);
-             this.daniUNedelji[i].arzurirajDan();*/
-
              this.daniUNedelji[i].izbrisiObavezu(naziv, boja, hitno);
-             }
-         
+            }
+        //dugme Snimi
+           /* const dugmeSnimi = document.createElement("button");
+            dugmeSnimi.innerHTML="Snimi";
+            dugmeSnimi.className="dugme";
+            kontejnerForma.appendChild(dugmeSnimi);
+            dugmeSnimi.onclick=(ev)=>{
+                this.daniUNedelji.forEach( dan => 
+                    {
+                        fetch("https://localhost:5001/Planer/UpisiObaveze/" + dan.id, 
+                        {
+                         method: "POST",
+                         headers: {
+                             "Content-Type": "application/json"
+                         },
+                        body: JSON.stringify(
+                            {
+                            predmet:predmet,
+                            boja: boja,
+                            hitno: hitno
+                            })
+                        })
+                    
+                    });
+         */
         }
+    
         crtajNedelju(host)
         { 
         const kontejnerNedelja=document.createElement("div");
@@ -156,8 +182,11 @@ export class Nedelja{
             kontejnerNedelja.appendChild(kontejner);
             dan.crtajDan(kontejner);
         }); 
-        }
     }
+}
+   
 
     
+    
+
     

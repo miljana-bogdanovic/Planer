@@ -1,0 +1,17 @@
+INSERT INTO Planer.dbo.Planer
+VALUES ( 'Trenutna nedelja')
+
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Ponedeljak',3016)
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Utorak',3016)
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Sreda',3016)
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Cetvrtak',3016)
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Petak',3016)
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Subota',3016)
+INSERT INTO Planer.dbo.Dani
+VALUES ( 'Nedelja',3016)
